@@ -11,10 +11,10 @@
 <body id="app">
 
   <div class="keys" ref="cards">
-    <div :data-key="key" class="key" v-for="(sound,key) in ascii">
-      <kbd>{{String.fromCharCode(key)}}</kbd>
-      <span class="sound">{{sound}}</span>
-      <audio :data-key="key" :src="'sounds/'+sound+'.wav'"></audio>
+    <div :ref="'key'+item.key" class="key" v-for="item in ascii">
+      <kbd>{{String.fromCharCode(item.key)}}</kbd>
+      <span class="sound">{{item.sound}}</span>
+      <audio :src="'sounds/'+item.sound+'.wav'" :ref="'audio'+item.key"></audio>
     </div>
   </div>
 </body>
@@ -25,19 +25,36 @@
   const Counter = {
     data() {
       return {
-        ascii: { 65: 'clap', 83: 'hihat', 68: 'kick', 70: 'openhat', 71: 'boom', 72: 'ride', 74: 'snare', 75: 'tom', 76: 'tink' }
+        ascii: [{ key: 65, sound: 'clap' },
+        { key: 83, sound: 'hihat' }, { key: 68, sound: 'kick' }, { key: 70, sound: 'openhat' },
+        { key: 71, sound: 'boom' }, { key: 72, sound: 'ride' }, { key: 74, sound: 'snare' }, { key: 75, sound: 'tom' },
+        { key: 76, sound: 'tink' }]
       }
     },
     methods: {
       playSound(e) {
-        console.log(e);
+        const audio = this.$refs["audio" + e.keyCode];
+        const key = this.$refs["key" + e.keyCode];
+        if (!audio) return;
+        key.classList.add('playing');
+        audio.currentTime = 0;
+        audio.play();
+      },
+      removeTransition(e) {
+        if (e.propertyName !== 'transform') return;
+        e.target.classList.remove('playing');
       }
     },
     mounted() {
+      var self = this;
       window.addEventListener("keydown", function (e) {
-        console.log(String.fromCharCode(e.keyCode));
-        console.log(this.$refs.cards.children[index]);
+        self.playSound(e);
       });
+      for (let [key, value] of Object.entries(this.$refs)) {
+        if (/^key/.test(key)) {
+          value.addEventListener('transitionend', self.removeTransition);
+        }
+      }
     }
   }
   Vue.createApp(Counter).mount('#app');
