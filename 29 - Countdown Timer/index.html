@@ -7,23 +7,26 @@
   <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="style.css">
   <script src="https://unpkg.com/vue@next"></script>
+
+
 </head>
 
 <body id="app">
   <div class="timer">
     <div class="timer__controls">
-      <button :data-time="item.time" v-for="item in data" class="timer__button">{{item.info}}</button>
-      <form name="customForm" id="custom">
-        <input type="text" name="minutes" placeholder="Enter Minutes">
+      <button :data-time="item.time" v-for="item in data" class="timer__button"
+        @click="startTimer">{{item.info}}</button>
+      <form name="customForm" id="custom" @submit.prevent="processForm">
+        <input type="text" name="minutes" placeholder="Enter Minutes" v-model="minutes">
       </form>
     </div>
     <div class="display">
-      <h1 class="display__time-left"></h1>
-      <p class="display__end-time"></p>
+      <h1 class="display__time-left" ref="displayTimeLeft"></h1>
+      <p class="display__end-time" ref="displayTimeEnd"></p>
     </div>
   </div>
 
-  <script src="scripts-START.js"></script>
+  <script src="scripts-FINISHED.js"></script>
 </body>
 
 </html>

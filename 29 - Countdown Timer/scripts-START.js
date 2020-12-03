@@ -9,6 +9,9 @@ const app = {
         }
     },
     methods: {
+        startTimer() {
+
+        }
     },
     mounted() {
     }
