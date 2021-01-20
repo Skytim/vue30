@@ -11,11 +11,11 @@
 
 <body id="app">
 
-  <h1>Whack-a-mole! <span class="score">{{score}}</span></h1>
+  <h1> <span class="score">{{score}}</span></h1>
   <button @click="startGame()">Start!</button>
 
   <div class="game">
-    <div class="hole" v-for="(n,i) in 6" :key="i">
+    <div class="hole" v-for="(n,i) in holeNumber" :key="i" :ref="'hole' + n">
       <div class="mole"></div>
     </div>
   </div>
@@ -29,16 +29,50 @@
   const app = {
     data() {
       return {
-        score: 0
+        score: 0,
+        lastHole: null,
+        timeUp: false,
+        holeNumber: 6
       }
     },
     methods: {
       startGame() {
-        console.log('check');
+        var self = this;
+        self.score = 0;
+        self.timeUp = false;
+        self.score = 0;
+        self.peep();
+        setTimeout(() => self.timeUp = true, 10000)
+      },
+      peep() {
+        const time = this.randomTime(200, 1000);
+        const hole = this.randomHole();
+        hole.classList.add('up');
+        var self = this;
+        setTimeout(() => {
+          hole.classList.remove('up');
+          if (!self.timeUp) {
+            self.peep();
+          }
+          ;
+        }, time);
+      },
+      randomHole() {
+        const idx = Math.floor(Math.random() * 6 + 1);
+        const hole = this.$refs['hole' + idx];
+        if (hole === this.lastHole) {
+          console.log('Ah nah thats the same one bud');
+          return randomHole();
+        }
+        this.lastHole = hole;
+        return hole;
+      },
+      randomTime(min, max) {
+        return Math.round(Math.random() * (max - min) + min);
       }
     },
     mounted() {
-
+      console.log(this.$refs);
     }
   };
   Vue.createApp(app).mount('#app')
