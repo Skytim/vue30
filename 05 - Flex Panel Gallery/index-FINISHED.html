@@ -124,7 +124,7 @@
 </head>
 
 <body id="app">
-  <div class="panels">
+  <div class="panels" @click="toggleOpen" @transition="toggleActive">
     <div class="panel panel1">
       <p>Hey</p>
       <p>Let's</p>
@@ -153,23 +153,45 @@
   </div>
 
   <script>
-    const panels = document.querySelectorAll('.panel');
+    // function toggleOpen() {
+    //   console.log('Hello');
+    //   this.classList.toggle('open');
+    // }
 
-    function toggleOpen() {
-      console.log('Hello');
-      this.classList.toggle('open');
-    }
+    // function toggleActive(e) {
+    //   console.log(e.propertyName);
+    //   if (e.propertyName.includes('flex')) {
+    //     this.classList.toggle('open-active');
+    //   }
+    // }
 
-    function toggleActive(e) {
-      console.log(e.propertyName);
-      if (e.propertyName.includes('flex')) {
-        this.classList.toggle('open-active');
+    // panels.forEach(panel => panel.addEventListener('click', toggleOpen));
+    // panels.forEach(panel => panel.addEventListener('transitionend', toggleActive));
+    const app = {
+      data() {
+        return {
+        }
+      },
+      methods: {
+        toggleOpen(e) {
+          console.log('Hello');
+          e.target.classList.toggle('open');
+        },
+        toggleActive(e) {
+          console.log(e.propertyName);
+          if (e.propertyName.includes('flex')) {
+            this.classList.toggle('open-active');
+          }
+        }
+      },
+      mounted() {
+        var self = this;
+        const panels = document.querySelectorAll('.panel');
+        panels.forEach(panel => panel.addEventListener('click', self.toggleOpen));
+        panels.forEach(panel => panel.addEventListener('transitionend', self.toggleActive));
       }
-    }
-
-    panels.forEach(panel => panel.addEventListener('click', toggleOpen));
-    panels.forEach(panel => panel.addEventListener('transitionend', toggleActive));
-
+    };
+    Vue.createApp(app).mount('#app')
 
   </script>
 

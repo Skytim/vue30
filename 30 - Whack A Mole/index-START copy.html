@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Whack A Mole!</title>
+  <link href='https://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body id="app">
+
+  <h1>Whack-a-mole! <span class="score">{{score}}</span></h1>
+  <button @click="startGame()">Start!</button>
+
+  <div class="game">
+    <div class="hole" v-for="(n,i) in 6" :key="i">
+      <div class="mole"></div>
+    </div>
+  </div>
+
+
+
+</body>
+
+</html>
+<script>
+  const app = {
+    data() {
+      return {
+        score: 0
+      }
+    },
+    methods: {
+      startGame() {
+        console.log('check');
+      }
+    },
+    mounted() {
+
+    }
+  };
+  Vue.createApp(app).mount('#app')
+
+</script>
