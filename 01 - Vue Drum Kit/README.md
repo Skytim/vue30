@@ -16,8 +16,18 @@
 ```
 
 2. 在 `mounted` 的生命週期註冊上述的事件。
+```javascript
+
+```
 3. 利用`vue for`迴圈顯示 object
+```html
+
+```
 4. 利用`String.fromCharCode` 將 [ascii 轉成英文字母](https://zh.wikipedia.org/wiki/ASCII)
+
+```html
+
+```
 
 ```
 code:
