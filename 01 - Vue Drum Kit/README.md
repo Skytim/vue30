@@ -6,8 +6,7 @@
 
 2. 在 `mounted` 的生命週期註冊上述的事件。
 3. 利用`vue for`迴圈顯示 object
-4. 利用`ref`定位取得你想要的 object。
-5. 利用`String.fromCharCode` 將 [ascii 轉成英文字母](https://zh.wikipedia.org/wiki/ASCII)
+4. 利用`String.fromCharCode` 將 [ascii 轉成英文字母](https://zh.wikipedia.org/wiki/ASCII)
 ```
 code:
   <span>{{String.fromCharCode(item.key)}}</span>
