@@ -10,7 +10,7 @@
 
 <body id="app">
 
-  <div class="keys" ref="cards">
+  <div class="keys">
     <div :ref="'key'+item.key" class="key" v-for="item in ascii">
       <kbd>{{String.fromCharCode(item.key)}}</kbd>
       <span class="sound">{{item.sound}}</span>
@@ -22,7 +22,7 @@
 </html>
 
 <script type="application/javascript">
-  const Counter = {
+  const app = {
     data() {
       return {
         ascii: [
@@ -63,6 +63,6 @@
       }
     }
   }
-  Vue.createApp(Counter).mount('#app');
+  Vue.createApp(app).mount('#app');
 
 </script>
