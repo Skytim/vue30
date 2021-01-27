@@ -16,25 +16,20 @@
 ```
 
 2. 在 `mounted` 的生命週期註冊上述的事件。
-```javascript
-
-```
 3. 利用`vue for`迴圈顯示 object
 ```html
-
+<div :ref="'key'+item.key" class="key" v-for="item in ascii">
+	<kbd>{{String.fromCharCode(item.key)}}</kbd>
+	<span class="sound">{{item.sound}}</span>
+	<audio :src="'sounds/'+item.sound+'.wav'" :ref="'audio'+item.key"></audio>
+</div>
 ```
 4. 利用`String.fromCharCode` 將 [ascii 轉成英文字母](https://zh.wikipedia.org/wiki/ASCII)
 
 ```html
-
+<span>{{String.fromCharCode('65')}}</span> /// A
 ```
-
-```
-code:
-  <span>{{String.fromCharCode(item.key)}}</span>
-display:
-
-```
+Display:
 
 ### CSS 概念
 
