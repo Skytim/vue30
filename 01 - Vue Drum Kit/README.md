@@ -47,7 +47,7 @@ Display:
 3. 可以直接註冊標籤，並在 css 內敘述標籤功能。
 4. 背景圖片
 
-```
+```html
 html{
 	background:url(http://...)
     background-size:cover
