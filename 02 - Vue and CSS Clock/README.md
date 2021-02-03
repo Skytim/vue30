@@ -8,7 +8,7 @@
 
 ```javascript
 const now = new Date();
-const seconds = now.getSeconds();****
+const seconds = now.getSeconds();
 const secondsDegrees = ((seconds / 60) * 360) + 90;
 this.$refs.secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
 
