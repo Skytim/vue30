@@ -187,7 +187,6 @@
       mounted() {
         var self = this;
         const panels = document.querySelectorAll('.panel');
-        panels.forEach(panel => panel.addEventListener('click', self.toggleOpen));
         panels.forEach(panel => panel.addEventListener('transitionend', self.toggleActive));
       }
     };
