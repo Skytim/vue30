@@ -124,52 +124,18 @@
 </head>
 
 <body id="app">
-  <div class="panels" @click="toggleOpen" @transition="toggleActive">
-    <div class="panel panel1">
-      <p>Hey</p>
-      <p>Let's</p>
-      <p>Dance</p>
-    </div>
-    <div class="panel panel2">
-      <p>Give</p>
-      <p>Take</p>
-      <p>Receive</p>
-    </div>
-    <div class="panel panel3">
-      <p>Experience</p>
-      <p>It</p>
-      <p>Today</p>
-    </div>
-    <div class="panel panel4">
-      <p>Give</p>
-      <p>All</p>
-      <p>You can</p>
-    </div>
-    <div class="panel panel5">
-      <p>Life</p>
-      <p>In</p>
-      <p>Motion</p>
-    </div>
+  <div class="panels">
+    <transition-group>
+      <div class="panel" :class="'panel'+(index+1)" v-for="(sentence,index) in sentences" :key="index" @click="toggleOpen" @transition="toggleActive">
+        <p v-for="word in sentence.split(' ')">{{word}}</p>
+      </div>
+    </transition-group>
   </div>
-
   <script>
-    // function toggleOpen() {
-    //   console.log('Hello');
-    //   this.classList.toggle('open');
-    // }
-
-    // function toggleActive(e) {
-    //   console.log(e.propertyName);
-    //   if (e.propertyName.includes('flex')) {
-    //     this.classList.toggle('open-active');
-    //   }
-    // }
-
-    // panels.forEach(panel => panel.addEventListener('click', toggleOpen));
-    // panels.forEach(panel => panel.addEventListener('transitionend', toggleActive));
     const app = {
       data() {
         return {
+          sentences: ["Hey Let's Dance", "Give Take Receive", "Experience It Today", "Give All Youcan", "Life In Motion"]
         }
       },
       methods: {
@@ -183,11 +149,6 @@
             this.classList.toggle('open-active');
           }
         }
-      },
-      mounted() {
-        var self = this;
-        const panels = document.querySelectorAll('.panel');
-        panels.forEach(panel => panel.addEventListener('transitionend', self.toggleActive));
       }
     };
     Vue.createApp(app).mount('#app')
