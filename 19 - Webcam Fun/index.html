@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Get User Media Code Along!</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/vue@next"></script>
 </head>
-<body>
+
+<body id="app">
 
   <div class="photobooth">
     <div class="controls">
       <button onClick="takePhoto()">Take Photo</button>
-<!--       <div class="rgb">
+      <!--       <div class="rgb">
         <label for="rmin">Red Min:</label>
         <input type="range" min=0 max=255 name="rmin">
         <label for="rmax">Red Max:</label>
@@ -32,14 +35,16 @@
       </div> -->
     </div>
 
-    <canvas class="photo"></canvas>
-    <video class="player"></video>
-    <div class="strip"></div>
+    <canvas class="photo" ref="photo"></canvas>
+    <video class="player" ref="player"></video>
+    <div class="strip" ref="strip"></div>
   </div>
 
-  <audio class="snap" src="./snap.mp3" hidden></audio>
+  <audio class="snap" src="./snap.mp3" ref="snap" hidden></audio>
 
-  <script src="scripts.js"></script>
+
 
 </body>
+
 </html>
+<script src="scripts-FINISHED copy.js"></script>
