@@ -17,9 +17,9 @@
         @keyup="displayMatches"
       />
       <ul class="suggestions">
-        <li :for="data in displayCities">
-          <span class="name">{{data?.city}}</span>
-          <span class="population"></span>
+        <li v-for="data in displayCities">
+          <span class="name">{{data?.city}} {{data?.state}}</span>
+          <span class="population">{{ numberWithCommas(data?.population)}}</span>
         </li>
       </ul>
     </form>
@@ -43,40 +43,19 @@
           return place.city.match(regex) || place.state.match(regex);
         });
       },
-      numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      },
       displayMatches(e) {
         this.displayCities = this.findMatches(e.target.value, this.initCities);
-        //   const html = matchArray
-        //     .map((place) => {
-        //       const regex = new RegExp(this.value, "gi");
-        //       const cityName = place.city.replace(
-        //         regex,
-        //         `<span class="hl">${this.value}</span>`
-        //       );
-        //       const stateName = place.state.replace(
-        //         regex,
-        //         `<span class="hl">${this.value}</span>`
-        //       );
-        //       return `
-        //   <li>
-        //     <span class="name">${cityName}, ${stateName}</span>
-        //     <span class="population">${numberWithCommas(place.population)}</span>
-        //   </li>
-        // `;
-        //     })
-        //     .join("");
-        //   suggestions.innerHTML = html;
-        console.log(this.displayCities);
       },
+      numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
     },
     mounted() {
       var self = this;
       axios.get(self.endpoint).then(function (response) {
         self.initCities = response.data;
       });
-    },
+    }
   };
   Vue.createApp(app).mount("#app");
 </script>
