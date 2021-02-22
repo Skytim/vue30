@@ -4,7 +4,11 @@
     <meta charset="UTF-8" />
     <title>Videos</title>
     <script src="https://unpkg.com/vue@next"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js" integrity="sha512-90vH1Z83AJY9DmlWa8WkjkV79yfS2n2Oxhsi2dZbIv0nC4E6m5AbH8Nh156kkM7JePmqD6tcZsfad1ueoaovww==" crossorigin="anonymous"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js"
+      integrity="sha512-90vH1Z83AJY9DmlWa8WkjkV79yfS2n2Oxhsi2dZbIv0nC4E6m5AbH8Nh156kkM7JePmqD6tcZsfad1ueoaovww=="
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body id="app">
     <ul class="videos">
@@ -78,13 +82,11 @@
         },
         methods: {},
         mounted() {
-         
-          var seconds = this.times
-            .map((timeCode) => {
-              const [mins, secs] = timeCode.split(":").map(parseFloat);
-              return mins * 60 + secs;
-            })
-            .reduce((total, vidSeconds) => total + vidSeconds);
+          // need add chain
+          _.map(this.times, function (timeCode) {
+            const [mins, secs] = timeCode.split(":").map(parseFloat);
+            return mins * 60 + secs;
+          }).reduce((total, vidSeconds) => total + vidSeconds);
 
           let secondsLeft = seconds;
           const hours = Math.floor(secondsLeft / 3600);
