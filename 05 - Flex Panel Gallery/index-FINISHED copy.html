@@ -126,7 +126,6 @@
 
   <body id="app">
     <div class="panels">
-      <transition-group>
         <div
           class="panel"
           :class="'panel'+(index+1)"
@@ -137,7 +136,6 @@
         >
           <p v-for="word in sentence.split(' ')">{{word}}</p>
         </div>
-      </transition-group>
     </div>
     <script>
       const app = {

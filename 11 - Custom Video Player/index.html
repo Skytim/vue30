@@ -3,15 +3,15 @@
     <head>
         <meta charset="UTF-8" />
         <title>HTML Video Player</title>
-        <link rel="stylesheet" href="style.css" />
+        <!-- <link rel="stylesheet" href="style.css" /> -->
         <script src="https://unpkg.com/vue@next"></script>
     </head>
-    <body>
+    <body id="app">
         <div class="player">
             <video class="player__video viewer" src="652333414.mp4" ref="video"></video>
 
             <div class="player__controls">
-                <div class="progress">
+                <div class="progress" ref="progress">
                     <div class="progress__filled"></div>
                 </div>
                 <button class="player__button toggle" title="Toggle Play">►</button>
