@@ -27,8 +27,8 @@
 const app = {
     methods: {
         togglePlay() {
-            const method = video.paused ? "play" : "pause";
-            video[method]();
+            const method = this.$refs.video.paused ? "play" : "pause";
+            this.$refs.video[method]();
         },
 
         updateButton() {
@@ -37,12 +37,12 @@ const app = {
             toggle.textContent = icon;
         },
 
-        skip() {
-            video.currentTime += parseFloat(this.dataset.skip);
+        skip(e) {
+            this.$refs.video.currentTime += parseFloat(e.target.dataset.skip);
         },
 
-        handleRangeUpdate() {
-            video[this.name] = this.value;
+        handleRangeUpdate(e) {
+            this.$refs.video[e.target.name] = e.target.value;
         },
 
         handleProgress() {
@@ -55,12 +55,6 @@ const app = {
             video.currentTime = scrubTime;
         },
     },
-    mounted() {
-        this.setDate();
-        setInterval(() => {
-            this.setDate();
-        }, 1000);
-        console.log()
-    },
+    mounted() {},
 };
 Vue.createApp(app).mount("#app");
