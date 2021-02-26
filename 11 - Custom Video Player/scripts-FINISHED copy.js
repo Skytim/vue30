@@ -25,6 +25,11 @@
 // progress.addEventListener("mouseup", () => (mousedown = false));
 
 const app = {
+    data: function () {
+        return {
+            mousedown: false,
+        };
+    },
     methods: {
         togglePlay() {
             const method = this.$refs.video.paused ? "play" : "pause";
@@ -54,6 +59,7 @@ const app = {
             const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
             video.currentTime = scrubTime;
         },
+        
     },
     mounted() {},
 };
