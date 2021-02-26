@@ -36,10 +36,10 @@ const app = {
             this.$refs.video[method]();
         },
 
-        updateButton() {
-            const icon = this.paused ? "►" : "❚ ❚";
+        updateButton(e) {
+            const icon =  this.$refs.video.paused ? "►" : "❚ ❚";
             console.log(icon);
-            toggle.textContent = icon;
+            this.$refs.toggle.textContent = icon;
         },
 
         skip(e) {
@@ -52,14 +52,12 @@ const app = {
 
         handleProgress() {
             const percent = (video.currentTime / video.duration) * 100;
-            progressBar.style.flexBasis = `${percent}%`;
+            this.$refs.progressBar.style.flexBasis = `${percent}%`;
         },
-
         scrub(e) {
             const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
-            video.currentTime = scrubTime;
+            this.$refs.video.currentTime = scrubTime;
         },
-        
     },
     mounted() {},
 };

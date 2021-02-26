@@ -8,7 +8,7 @@
     </head>
     <body id="app">
         <div class="player">
-            <video class="player__video viewer" src="652333414.mp4" ref="video" @click="togglePlay()"></video>
+            <video class="player__video viewer" src="652333414.mp4" ref="video" @click="togglePlay()" @play="updateButton(e)"  @pause="updateButton(e)" @timeupdate="handleProgress()"></video>
 
             <div class="player__controls">
                 <div class="progress" @click="scrub(e)" @mousemove=" scrub(e) && mousedown"
