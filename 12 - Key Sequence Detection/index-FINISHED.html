@@ -1,25 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Key Detection</title>
-  <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
-</head>
-<body>
-<script>
-const pressed = [];
-const secretCode = 'wesbos';
-
-window.addEventListener('keyup', (e) => {
-  console.log(e.key);
-  pressed.push(e.key);
-  pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
-  if (pressed.join('').includes(secretCode)) {
-    console.log('DING DING!');
-    cornify_add();
-  }
-  console.log(pressed);
-});
-</script>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Key Detection</title>
+        <script src="https://unpkg.com/vue@next"></script>
+        <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
+    </head>
+    <body id="app"></body>
 </html>
+<script>
+    const app = {
+        data: function () {
+            return {
+                pressed: [],
+                secretCode: "tim",
+            };
+        },
+        methods: {},
+        mounted() {
+            var self = this;
+            window.addEventListener("keyup", (e) => {
+                console.log(e.key);
+                self.pressed.push(e.key);
+                self.pressed.splice(-self.secretCode.length - 1, self.pressed.length - self.secretCode.length);
+                if (self.pressed.join("").includes(self.secretCode)) {
+                    console.log("DING DING!");
+                    cornify_add();
+                }
+                console.log(self.pressed);
+            });
+        },
+    };
+    Vue.createApp(app).mount("#app");
+</script>
