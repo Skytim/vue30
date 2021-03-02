@@ -1,55 +1,38 @@
-/* Get Our Elements */
-const player = document.querySelector('.player');
-const video = player.querySelector('.viewer');
-const progress = player.querySelector('.progress');
-const progressBar = player.querySelector('.progress__filled');
-const toggle = player.querySelector('.toggle');
-const skipButtons = player.querySelectorAll('[data-skip]');
-const ranges = player.querySelectorAll('.player__slider');
+const app = {
+    data: function () {
+        return {
+            mousedown: false,
+        };
+    },
+    methods: {
+        togglePlay() {
+            const method = this.$refs.video.paused ? "play" : "pause";
+            this.$refs.video[method]();
+        },
 
-/* Build out functions */
-function togglePlay() {
-  const method = video.paused ? 'play' : 'pause';
-  video[method]();
-}
+        updateButton(e) {
+            const icon =  this.$refs.video.paused ? "►" : "❚ ❚";
+            console.log(icon);
+            this.$refs.toggle.textContent = icon;
+        },
 
-function updateButton() {
-  const icon = this.paused ? '►' : '❚ ❚';
-  console.log(icon);
-  toggle.textContent = icon;
-}
+        skip(e) {
+            this.$refs.video.currentTime += parseFloat(e.target.dataset.skip);
+        },
 
-function skip() {
- video.currentTime += parseFloat(this.dataset.skip);
-}
+        handleRangeUpdate(e) {
+            this.$refs.video[e.target.name] = e.target.value;
+        },
 
-function handleRangeUpdate() {
-  video[this.name] = this.value;
-}
-
-function handleProgress() {
-  const percent = (video.currentTime / video.duration) * 100;
-  progressBar.style.flexBasis = `${percent}%`;
-}
-
-function scrub(e) {
-  const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
-  video.currentTime = scrubTime;
-}
-
-/* Hook up the event listeners */
-video.addEventListener('click', togglePlay);
-video.addEventListener('play', updateButton);
-video.addEventListener('pause', updateButton);
-video.addEventListener('timeupdate', handleProgress);
-
-toggle.addEventListener('click', togglePlay);
-skipButtons.forEach(button => button.addEventListener('click', skip));
-ranges.forEach(range => range.addEventListener('change', handleRangeUpdate));
-ranges.forEach(range => range.addEventListener('mousemove', handleRangeUpdate));
-
-let mousedown = false;
-progress.addEventListener('click', scrub);
-progress.addEventListener('mousemove', (e) => mousedown && scrub(e));
-progress.addEventListener('mousedown', () => mousedown = true);
-progress.addEventListener('mouseup', () => mousedown = false);
+        handleProgress() {
+            const percent = (this.$refs.video.currentTime / this.$refs.video.duration) * 100;
+            this.$refs.progressBar.style.flexBasis = `${percent}%`;
+        },
+        scrub(e) {
+            const scrubTime = (e.offsetX / this.$refs.progress.offsetWidth) * this.$refs.video.duration;
+            this.$refs.video.currentTime = scrubTime;
+        },
+    },
+    mounted() {},
+};
+Vue.createApp(app).mount("#app");
