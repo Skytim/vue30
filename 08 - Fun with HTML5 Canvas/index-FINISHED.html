@@ -1,73 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>HTML5 Canvas</title>
+  <script src="https://unpkg.com/vue@next"></script>
 </head>
-<body>
-<canvas id="draw" width="800" height="800"></canvas>
+
+<body id="app">
+  <canvas id="draw" width="800" height="800" ref="draw" @mousedown="mousedownAction($event)"
+    @mousemove="draw($event)" @mouseup="isDrawingFalse()"  @mouseout="isDrawingFalse()"></canvas>
+</body>
+
+</html>
 <script>
-const canvas = document.querySelector('#draw');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-ctx.strokeStyle = '#BADA55';
-ctx.lineJoin = 'round';
-ctx.lineCap = 'round';
-ctx.lineWidth = 100;
-// ctx.globalCompositeOperation = 'multiply';
+  var app = {
+    data: function () {
+      return {
+        canvas: null,
+        ctx: null,
+        isDrawing: false,
+        lastX: 0,
+        lastY: 0,
+        hue: 0,
+        direction: true
+      }
+    },
+    methods: {
+      mousedownAction(e) {
+        this.isDrawing = true;
+        this.lastX = e.offsetX;
+        this.lastY = e.offsetY;
+      },
+      isDrawingFalse(e) {
+        this.isDrawing = false;
+      },
+      draw(e) {
+        if (!this.isDrawing) return; // stop the fn from running when they are not moused down
+        console.log(e);
+        this.ctx.strokeStyle = `hsl(${this.hue}, 100%, 50%)`;
+        this.ctx.beginPath();
+        // start from
+        this.ctx.moveTo(this.lastX, this.lastY);
+        // go to
+        this.ctx.lineTo(e.offsetX, e.offsetY);
+        this.ctx.stroke();
+        [this.lastX, this.lastY] = [e.offsetX, e.offsetY];
 
-let isDrawing = false;
-let lastX = 0;
-let lastY = 0;
-let hue = 0;
-let direction = true;
+        this.hue++;
+        if (this.hue >= 360) {
+          this.hue = 0;
+        }
+        if (this.ctx.lineWidth >= 100 || this.ctx.lineWidth <= 1) {
+          this.direction = !this.direction;
+        }
 
-function draw(e) {
-  if (!isDrawing) return; // stop the fn from running when they are not moused down
-  console.log(e);
-  ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
-  ctx.beginPath();
-  // start from
-  ctx.moveTo(lastX, lastY);
-  // go to
-  ctx.lineTo(e.offsetX, e.offsetY);
-  ctx.stroke();
-  [lastX, lastY] = [e.offsetX, e.offsetY];
+        if (this.direction) {
+          this.ctx.lineWidth++;
+        } else {
+          this.ctx.lineWidth--;
+        }
 
-  hue++;
-  if (hue >= 360) {
-    hue = 0;
-  }
-  if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
-    direction = !direction;
-  }
-
-  if(direction) {
-    ctx.lineWidth++;
-  } else {
-    ctx.lineWidth--;
-  }
-
-}
-
-canvas.addEventListener('mousedown', (e) => {
-  isDrawing = true;
-  [lastX, lastY] = [e.offsetX, e.offsetY];
-});
-
-
-canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('mouseup', () => isDrawing = false);
-canvas.addEventListener('mouseout', () => isDrawing = false);
-
+      }
+    },
+    mounted() {
+      this.canvas = this.$refs['draw'];
+      this.ctx = this.canvas.getContext('2d');
+      this.canvas.width = window.innerWidth;
+      this.canvas.height = window.innerHeight;
+      this.ctx.strokeStyle = '#BADA55';
+      this.ctx.lineJoin = 'round';
+      this.ctx.lineCap = 'round';
+      this.ctx.lineWidth = 100;
+      this.ctx.globalCompositeOperation = 'multiply';
+    }
+  };
+  Vue.createApp(app).mount('#app')
 </script>
-
 <style>
-  html, body {
+  html,
+  body {
     margin: 0;
   }
 </style>
-
-</body>
-</html>
