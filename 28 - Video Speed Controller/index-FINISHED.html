@@ -1,39 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Video Speed Scrubber</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Video Speed Scrubber</title>
+        <link rel="stylesheet" href="style.css" />
+        <script src="https://unpkg.com/vue@next"></script>
+    </head>
 
-  <div class="wrapper">
-    <video class="flex" width="765" height="430" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" loop controls></video>
-    <p>
-    <div class="speed">
-      <div class="speed-bar">1×</div>
-    </div>
-  </div>
-
-<script>
-  const speed = document.querySelector('.speed');
-  const bar = speed.querySelector('.speed-bar');
-  const video = document.querySelector('.flex');
-
-  function handleMove(e) {
-      const y = e.pageY - this.offsetTop;
-      const percent = y / this.offsetHeight;
-      const min = 0.4;
-      const max = 4;
-      const height = Math.round(percent * 100) + '%';
-      const playbackRate = percent * (max - min) + min;
-      bar.style.height = height;
-      bar.textContent = playbackRate.toFixed(2) + '×';
-      video.playbackRate = playbackRate;
-    }
-
-  speed.addEventListener('mousemove', handleMove);
-
-</script>
-</body>
+    <body id="app">
+        <div class="wrapper">
+            <video
+                class="flex"
+                width="765"
+                height="430"
+                src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"
+                loop
+                controls
+                ref="video"
+            ></video>
+            <div class="speed" @mousemove="handleMove($event)">
+                <div class="speed-bar" ref="bar">1×</div>
+            </div>
+        </div>
+    </body>
 </html>
+<script>
+    const app = {
+        data() {
+            return {};
+        },
+        methods: {
+            handleMove(e) {
+                const y = e.pageY - e.currentTarget.offsetTop;
+                const percent = y / e.currentTarget.offsetHeight;
+                const min = 0.4;
+                const max = 4;
+                const height = Math.round(percent * 100) + "%";
+                const playbackRate = percent * (max - min) + min;
+                console.log(height);
+                this.$refs["bar"].style.height = height;
+                this.$refs["bar"].textContent = playbackRate.toFixed(2) + "×";
+                this.$refs["video"].playbackRate = playbackRate;
+            },
+        },
+        mounted() {},
+    };
+    Vue.createApp(app).mount("#app");
+</script>
