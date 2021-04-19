@@ -9,7 +9,7 @@
 
 <body id="app">
   <canvas id="draw" width="800" height="800" ref="draw" @mousedown="mousedownAction($event)"
-    @mousemove="draw($event)" @mouseup="isDrawingFalse()"  @mouseout="isDrawingFalse()"></canvas>
+    @mousemove="draw($event)" @mouseup="isDrawing=false"  @mouseout="isDrawing=false"></canvas>
 </body>
 
 </html>
@@ -32,12 +32,8 @@
         this.lastX = e.offsetX;
         this.lastY = e.offsetY;
       },
-      isDrawingFalse(e) {
-        this.isDrawing = false;
-      },
       draw(e) {
         if (!this.isDrawing) return; // stop the fn from running when they are not moused down
-        console.log(e);
         this.ctx.strokeStyle = `hsl(${this.hue}, 100%, 50%)`;
         this.ctx.beginPath();
         // start from
