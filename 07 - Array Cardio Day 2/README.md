@@ -50,7 +50,7 @@ const index = _.findIndex(comments, function (comment) {
 });
 ```
 
-刪除元素可以使用
+### 刪除元素
 
 -   `splice(index, num, Array[])`，第一個參數是要刪除的 index 起點, 第二個參數是要刪除的數量，第三個參數之後是要新加入的內容。會回傳刪除後的陣列。
 -   `slice(index, index)`，第一個參數為起點，第二個參數為終點（不包含終點），若第二個參數不填預設為最後。回傳一個 array object。若是利用拆分的方式，掠過`index`不處理。可以達到`splice()`的效果。
