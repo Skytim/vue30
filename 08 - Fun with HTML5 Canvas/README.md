@@ -40,20 +40,19 @@
   ```javascript
     data: function () {
         return {
-        isDrawing: false,
+            isDrawing: false,
         }
     }
   ```
 
-> 接下來定義監聽事件，用事件來驅動繪畫。
+> 加入事件來驅動繪畫
 
-- 這邊會使用到`mousedown`按下滑鼠， `mousemove`移動滑鼠，`mouseup`放開滑鼠及`mouseout` 滑鼠移開使窗。按下滑鼠後`isDrawing`為`true`開始繪畫。`mouseup`時代表會畫完成`isDrawing`為`false`，`mouseout`移開視窗時`isDrawing`為`false`。
+- 這邊會使用到`@mousedown`按下滑鼠， `@mousemove`移動滑鼠，`@mouseup`放開滑鼠及 `@mouseout` 滑鼠移開使窗。
+按下滑鼠後`isDrawing`為`true`開始繪畫。`@mouseup`時代表繪圖完成`isDrawing`為`false`，`mouseout`移開視窗時`isDrawing`為`false`。
 
-  ```javascript
-  canvas.addEventListener('mousedown', ()=>isDrawing = true); //開始繪圖]
-  canvas.addEventListener('mousemove', draw);//繪製圖片中
-  canvas.addEventListener('mouseup', ()=>isDrawing = false);//完成繪圖
-  canvas.addEventListener('mouseout', ()=>isDrawing = false);//取消繪圖
+  ```html
+  <canvas id="draw" width="800" height="800" ref="draw" @mousedown="mousedownAction($event)"
+    @mousemove="draw($event)" @mouseup="isDrawingFalse()"  @mouseout="isDrawingFalse()"></canvas>
   ```
 
 > 先定義繪畫的方法，並查看監聽事件是否有效。
@@ -71,10 +70,10 @@
 
 - 定義繪畫內容會用到4個參數。
 
-  - `ctx.beginPath()`當作繪畫啟動。
-  - `ctx.moveTo(a,b)`當作起始位置。
-  - `ctx.lineTo(a,b)`當作終點位置。
-  - `ctx.stroke()`代表繪製以定義的路徑。
+  - `this.ctx.beginPath()` 當作繪畫啟動。
+  - `this.ctx.moveTo(a,b)` 當作起始位置。
+  - `this.ctx.lineTo(a,b)` 當作終點位置。
+  - `this.ctx.stroke()` 代表繪製以定義的路徑。
 
 - 先在function外定義最後的位置為`lastX, lastY`。`e.offsetX`代表回傳事件的當前座標，所以我們可以定義`e.offsetX, e.offsetY`為每次的起始位置。
 
@@ -83,30 +82,46 @@
   let lastY = 0;
 
   function draw(e){
-    if (!isDrawing) return;
-    ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
-    ctx.lineTo(e.offsetX, e.offsetY); //畫到的位置。
-    ctx.stroke();
+      if (!this.isDrawing) return;
+        this.ctx.strokeStyle = `hsl(${this.hue}, 100%, 50%)`;
+        this.ctx.beginPath();
+        // start from
+        this.ctx.moveTo(this.lastX, this.lastY);
+        // go to
+        this.ctx.lineTo(e.offsetX, e.offsetY);
+        this.ctx.stroke();
   }
 
-  canvas.addEventListener('mousedown', (e)=> {
-    isDrawing = true;
-    [lastX, lastY] = [e.offsetX, e.offsetY];
-  }); //開始繪圖
   ```
 
 - 到這邊應該會發現繪製的途徑都是以同一個點當作起始位置，所以我們需要動態的更動起始位置，在`draw`方法內加入`[lastX, lastY] = [e.offsetX, e.offsetY];`更新起始位置。
 
   ```javascript
-  function draw(e){
-    if (!isDrawing) return;
-    ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
-    ctx.lineTo(e.offsetX, e.offsetY); //畫到的位置。
-    ctx.stroke();
-    [lastX, lastY] = [e.offsetX, e.offsetY];
-  }
+    draw(e) {
+        if (!this.isDrawing) return; // stop the fn from running when they are not moused down
+        this.ctx.strokeStyle = `hsl(${this.hue}, 100%, 50%)`;
+        this.ctx.beginPath();
+        // start from
+        this.ctx.moveTo(this.lastX, this.lastY);
+        // go to
+        this.ctx.lineTo(e.offsetX, e.offsetY);
+        this.ctx.stroke();
+        [this.lastX, this.lastY] = [e.offsetX, e.offsetY];
+
+        this.hue++;
+        if (this.hue >= 360) {
+            this.hue = 0;
+        }
+        if (this.ctx.lineWidth >= 100 || this.ctx.lineWidth <= 1) {
+            this.direction = !this.direction;
+        }
+
+        if (this.direction) {
+            this.ctx.lineWidth++;
+        } else {
+            this.ctx.lineWidth--;
+        }
+    }
   ```
 
 > 到目前為止應該就能呈現在畫布上畫圖的效果了!如果你還想要再做些效果?像是顏色，以及繪畫的粗細?這邊先來時做顏色的變化吧!
