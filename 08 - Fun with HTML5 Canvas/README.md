@@ -136,11 +136,12 @@
   let hue = 0;
 
   function draw(e){
-    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;//重新定義顏色
+    this.ctx.strokeStyle = `hsl(${this.hue}, 100%, 50%)`;//重新定義顏色
     ...
-    hue++;
-    if(hue>=360){
-      hue = 0; //若++到360自動歸零
+    this.hue++;
+
+    if (this.hue >= 360) {
+        this.hue = 0; //若++到360自動歸零
     }
   }
   ```
@@ -153,18 +154,19 @@
 
 - 當`direction`為`false`時，`ctx.lineWidth`遞減，當撿到1時把`direction`改成`true`。
 
-  ```javascript
+```javascript
   let direction = true;
 
-  function draw(e){
+    function draw(e){
     ...
-    if(ctx.lineWidth >= 100 || ctx.lineWidth <= 1){
-      direction = !direction;
+        if (this.ctx.lineWidth >= 100 || this.ctx.lineWidth <= 1) {
+            this.direction = !this.direction;
+        }
+
+        if (this.direction) {
+            this.ctx.lineWidth++;
+        } else {
+            this.ctx.lineWidth--;
+        }
     }
-    if(direction){
-      ctx.lineWidth++
-    }else{
-      ctx.lineWidth--
-    }
-  }
-  ```
+```
