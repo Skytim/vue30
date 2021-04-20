@@ -5,7 +5,7 @@
 [Axios](https://github.com/axios/axios)
 
 ## 內容
-- `fetch()api`:是標準的web api，不需要透過引入則可直接使用，不過因為是新的api，會有瀏覽器相容的問題，詳見[MDN](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)。`Fetch API`有許多優點，其中一個是實作了`Promise`的語法結構，讓使用者可以更有效的解析(resolve)回傳的資料。
+- `axios`:是 目前許多開發者所使用的 ajax libray，不需要透過引入則可直接使用，不過因為是新的api，會有瀏覽器相容的問題，詳見[MDN](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)。`Fetch API`有許多優點，其中一個是實作了`Promise`的語法結構，讓使用者可以更有效的解析(resolve)回傳的資料。
 
 - `Promise`: `Promise`是一個`非同步(async)操作執行後的結果`。當`Promise`初始話時，狀態為`等待中(pending)`，當執行async任務後，會回傳結果，無論成功(fulfilled)或是拒絕(rejected)皆會回傳，且不會在改變回傳的內容，所以每次執行時都會回傳新的`Promise`物件。
 

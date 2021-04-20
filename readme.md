@@ -1,4 +1,4 @@
-﻿![](https://images.ctfassets.net/fvjzlvrkinc4/3h1CuO6Kz0roj3RyUdsDRD/4356f2cb4f6cbc1c4191dc88d1f17294/Screen_Shot_2020-09-18_at_19.18.30.png?fm=jpg&fl=progressive)
+﻿![](https://user-images.githubusercontent.com/7261694/115401969-90155300-a21d-11eb-95d6-902094f94283.png)
 
 # Vue 30
 
