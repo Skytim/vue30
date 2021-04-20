@@ -2,7 +2,7 @@
 
 # Vue 30
 
-本篇幅是 以 Javascript30 線上的教學課程為基礎修改而成的 Vue 教程，在三十天的時間每天實作一個簡單的Vue作品並自身初學者的角度講解相關概念。 
+本篇幅是 以 Javascript30 線上的教學課程為基礎修改而成的 Vue 教程，在三十天的時間每天實作一個簡單的Vue作品並講解相關概念。 
 原教學網站：[https://JavaScript30.com](https://JavaScript30.com)。
 原Github位址：[wesbos/Javascript30](https://github.com/wesbos/JavaScript30)
 
@@ -17,13 +17,13 @@
 | 3. Update CSS variable with Vue           | 利用 CSS變數去改變CSS及JS的值造成效果                  | [效果](https://skytim.github.io/vue30/03%20-%20CSS%20Variables/index-FINISHED.html)         | [詳解](https://github.com/skytim/vue30/tree/master/03%20-%20CSS%20Variables) |
 | 4.  Array Cardio Day 1                   | 介紹 Lodash array的使用(filter, map, sort, reduce) | 無，用console操作                             | [詳解](https://github.com/skytim/vue30/tree/master/04%20-%20Array%20Cardio%20Day%201) |
 | 5.  Flex Panel Gallery                   | 利用 `flex` 的特性及 `transition` 的動畫效果做出點擊後的效果呈現。 | [效果](https://skytim.github.io/vue30/05%20-%20Flex%20Panel%20Gallery/index-FINISHED.html)  | [詳解](https://skytim.github.io/vue30/05%20-%20Flex%20Panel%20Gallery/) |
-| 6. Type Ahead                            | 介紹 `Fetch api`用 ajax的方式來取資料(城市名稱)，並依使用者輸入字符的不同查找不同的資料，會使用到正規表達式來處理字串。 | [效果](https://skytim.github.io/vue30/06%20-%20Type%20Ahead/index-FINISHED.html)            | [詳解](https://github.com/skytim/vue30/tree/master/06%20-%20Type%20Ahead) |
+| 6. Type Ahead                            | 介紹 `Axios`用 ajax的方式來取資料(城市名稱)，並依使用者輸入字符的不同查找不同的資料，會使用到正規表達式來處理字串。 | [效果](https://skytim.github.io/vue30/06%20-%20Type%20Ahead/index-FINISHED.html)            | [詳解](https://github.com/skytim/vue30/tree/master/06%20-%20Type%20Ahead) |
 | 7. Array Cardio Day 2                    | 介紹 Lodash array的使用(`some()`，`every()`，`find()`，`findIndex()`，利用也提到了關於`splice()`, `slice()`, `...`)的應用。 | 無，用console操作                             | [詳解](https://github.com/skytim/vue30/tree/master/07%20-%20Array%20Cardio%20Day%202) |
 | 8.  Fun with HTML5 Canvas                | 本篇主要透過Html的`canvas` 標籤搭配Javascript做出畫布的效果。效果包括:顏色的變化(`hsl`)及軌跡的粗細縮放。 | [效果](https://skytim.github.io/vue30/08%20-%20Fun%20with%20HTML5%20Canvas/index-FINISHED.html) | [詳解](https://github.com/skytim/vue30/tree/master/08%20-%20Fun%20with%20HTML5%20Canvas) |
 | 9.  Dev Tools Domination                 | 介紹常用的`dev tool` 以及`vue tool` ，增加開發`javascript`的除錯速度。 | 無，用console操作                             | [詳解](https://github.com/skytim/vue30/tree/master/09%20-%20Dev%20Tools%20Domination) |
 | 10.  Hold Shift and Check Checkboxes     | 本篇主要是要實作透過點擊checkbox後按下shift鍵之後一次選取多個checkbox的功能。 | [效果](https://skytim.github.io/vue30/10%20-%20Hold%20Shift%20and%20Check%20Checkboxes/index-FINISHED.html) | [詳解](https://github.com/skytim/vue30/tree/master/10%20-%20Hold%20Shift%20and%20Check%20Checkboxes) |
 | 11. Custom Video Player                  | 製作一個客製化的撥放器。我們會把chrome預設的撥放器取消，然後放上客製化的撥放器。會學到關於撥放器的事件及屬性。 | [效果](https://skytim.github.io/vue30/11%20-%20Custom%20Video%20Player/) | [詳解](https://github.com/skytim/vue30/tree/master/11%20-%20Custom%20Video%20Player) |
-| 12.  Key Sequence Detection              | 以前一定曾有過要輸入一段密碼之後會出現特定的畫面，稱為Key Sequence，要做的是如何偵測Key Sequence並產生特殊畫面。試著輸入看看'dustin' | [效果](https://skytim.github.io/vue30/12%20-%20Key%20Sequence%20Detection/index-FINISHED.html) | [詳解](https://github.com/skytim/vue30/tree/master/12%20-%20Key%20Sequence%20Detection) |
+| 12.  Key Sequence Detection              | 以前一定曾有過要輸入一段密碼之後會出現特定的畫面，稱為Key Sequence，要做的是如何偵測Key Sequence並產生特殊畫面。試著輸入看看'tim' | [效果](https://skytim.github.io/vue30/12%20-%20Key%20Sequence%20Detection/index-FINISHED.html) | [詳解](https://github.com/skytim/vue30/tree/master/12%20-%20Key%20Sequence%20Detection) |
 | 13.  Slide in on Scroll                  | 介紹一般網站上常出現的照片移入移出效果製作。當視窗移到照片的區域以動畫方式出現。 | [效果](https://skytim.github.io/vue30/13%20-%20Slide%20in%20on%20Scroll/index-FINISHED.html) | [詳解](https://github.com/skytim/vue30/tree/master/13%20-%20Slide%20in%20on%20Scroll) |
 | 14.  JavaScript References VS Copying    | 介紹Javascript賦值時，何時是用copy，何時是用reference。 | 無，用console操作                             | [詳解](https://github.com/skytim/vue30/tree/master/14%20-%20JavaScript%20References%20VS%20Copying) |
 | 15. LocalStorage and Event Delegate      | 介紹:`LocalStorage`的使用以及 `Event Delegate`的介紹 | [效果](https://skytim.github.io/vue30/15%20-%20LocalStorage/index-FINISHED.html)            | [詳解](https://github.com/skytim/vue30/tree/master/15%20-%20LocalStorage) |
