@@ -42,3 +42,4 @@
 | 28. Video speed controller               | 製作控制撥放速度的bar，及套用在video上。          | [效果](https://skytim.github.io/vue30/28%20-%20Video%20Speed%20Controller/index-FINISHED.html) | [詳解](https://github.com/skytim/vue30/tree/master/28%20-%20Video%20Speed%20Controller) |
 | 29. Countdown Timer                      | 製作倒數計時，可點選已經設置好的時間及可自行輸入時間的功能。    | [效果](https://skytim.github.io/vue30/29%20-%20Countdown%20Timer/index.html)       | [詳解](https://github.com/skytim/vue30/tree/master/29%20-%20Countdown%20Timer) |
 | 30. Whack a Hole!                        | 實作的打地鼠的遊戲，打地鼠的內容如下: 有六個洞會隨機出現地鼠，對著地鼠點擊即可得一分，遊戲時間10秒鐘。 | [效果](https://skytim.github.io/vue30/30%20-%20Whack%20A%20Mole/index-FINISHED.html)        | [詳解](https://github.com/skytim/vue30/tree/master/30%20-%20Whack%20A%20Mole) |
+
