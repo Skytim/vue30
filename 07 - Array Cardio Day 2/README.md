@@ -2,7 +2,7 @@
 
 ## 摘要
 
-延續 Day4 的陣列常使用方法做介紹。本篇包含 lodah 中常用的`some`，`every`，`find`，`findIndex`, `slice()`
+延續 Day4 的陣列常使用方法做介紹。本篇包含 lodah 中常用的 `some`，`every`，`find`，`findIndex`, `slice()`
 
 ## 內容
 
@@ -29,7 +29,7 @@ var allAdults = _.every(people, function (person) {
 console.log({ allAdults });
 ```
 
--   `find`:有點類似`filter()`，但是`filter`會回傳全部符合的項目，`find()`則回傳單一項目。
+-   `lodash.find()`:有點類似`lodash.filter()`，但是`lodash.filter()`會回傳全部符合的項目，`find()`則回傳單一項目。
 
 > 題目：找陣列 id 等於 823423，並回傳該元素。
 
@@ -56,7 +56,7 @@ const index = _.findIndex(comments, function (comment) {
 -   `slice(index, index)`，第一個參數為起點，第二個參數為終點（不包含終點），若第二個參數不填預設為最後。回傳一個 array object。若是利用拆分的方式，掠過`index`不處理。可以達到`splice()`的效果。
 -   `...`spread operator(ES6 功能)，可以將陣列轉換成單一數組，或將單一數組轉換成陣列。下面的例子因為連續使用`comments.slice()`，所以會讓數值變成`[Array[], Array[]]`，為了打破第二層的 array，需使用`...`，把結構轉變成`[{}, {}, {}, {}, ...]`。
 
-> 題目：刪除該 index 元素。
+> 實作: 刪除該 index 元素。
 
 ```javascript
 const newComments = [..._.slice(comments, 0, index), ..._.slice(comments, index + 1)];
