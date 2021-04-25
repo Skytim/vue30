@@ -2,7 +2,8 @@
 
 ##  摘要
 
-本篇主要透過Html的`canvas` 標籤搭配Vue做出畫布的效果。效果包括:顏色的變化(`hsl`)及軌跡的粗細縮放。
+本篇主要透過Html的`canvas` 標籤搭配Vue做出畫布的效果。
+主要適用於顏色的變化(`hsl`)及軌跡的粗細縮放。
 
 ## 內容
 
@@ -60,7 +61,7 @@
 - 定義`draw`這個方法。首先可以先判定`isDrawing`是否為`true`，為`false`則返回。
 
   ```javascript
-  function draw(e){
+  draw(e){
     if (!isDrawing) return; //設定停止
     console.log(e); //此時可以打開使用者工具看看有無回傳座標相關訊息，若有則代表到目前為止皆為成功!
   }
@@ -81,7 +82,7 @@
   let lastX = 0;
   let lastY = 0;
 
-  function draw(e){
+  draw(e){
       if (!this.isDrawing) return;
         this.ctx.strokeStyle = `hsl(${this.hue}, 100%, 50%)`;
         this.ctx.beginPath();
@@ -146,7 +147,7 @@
   }
   ```
 
-> 顏色定義完了， 應該可以看到效果了吧?接下來要來定義寬度囉，這邊的處理方式是由細到粗，並回歸到細。
+> 顏色定義完後，再來定義寬度，處理方式是由細到粗，並回歸到細。
 
 - 定義`direction`為粗細的參數，並定義其在`draw`中的變化。
 
@@ -156,17 +157,16 @@
 
 ```javascript
   let direction = true;
-
-    function draw(e){
+  draw(e){
     ...
-        if (this.ctx.lineWidth >= 100 || this.ctx.lineWidth <= 1) {
-            this.direction = !this.direction;
-        }
-
-        if (this.direction) {
-            this.ctx.lineWidth++;
-        } else {
-            this.ctx.lineWidth--;
-        }
+    if (this.ctx.lineWidth >= 100 || this.ctx.lineWidth <= 1) {
+      this.direction = !this.direction;
     }
+
+    if (this.direction) {
+        this.ctx.lineWidth++;
+    } else {
+        this.ctx.lineWidth--;
+    }
+  }
 ```
