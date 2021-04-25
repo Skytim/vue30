@@ -52,7 +52,7 @@ findMatches(wordToMatch, cities) {
 
 > 接下來要把資料依照查找的字串render出來。
 
-- 對輸入框建立`keyup`及`change`監聽事件，並觸發`displayMatehes`的查找事件。
+- 對輸入框加入`keyup`及`change`監聽事件，並觸發`displayMatehes`的查找事件。
 
 ```javascript
 <input
@@ -63,38 +63,8 @@ findMatches(wordToMatch, cities) {
   @keyup="displayMatches"
 />
 
-function displayMatches(){
-
-}
-```
-
-> 定義查找事件`displayMatches`的內容。
-
-- 首先先取得資料，並把資料重新`map`，並把查詢的字用css方式顯示出來。
-- `join()`:把`arrayObject`中的所有元素放入一個字串中。
-- 如果是要return `html`的語法要用` `` `包裹，中間要傳遞的參數可以用`${value}`，帶入。
-
-```javascript
-const app = {
-    data() {
-      return {
-        ...,
-        initCities:[],
-        displayCities: [],
-      };
-    },
-    methods: {
-      ...,
-      findMatches(wordToMatch, cities) {
-      ...
-      },
-      displayMatches(e) {
-        this.displayCities = this.findMatches(e.target.value, this.initCities);
-      }
-    }
-    ...
-  };
-  ...
+displayMatches(){
+  this.displayCities = this.findMatches(e.target.value, this.initCities);
 }
 ```
 
