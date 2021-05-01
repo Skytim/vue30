@@ -60,7 +60,7 @@
       console.clear();
 
       // Grouping together
-      dogs.forEach(dog => {
+      this.dogs.forEach(dog => {
         console.groupCollapsed(`${dog.name}`);
         console.log(`This is ${dog.name}`);
         console.log(`${dog.name} is ${dog.age} years old`);
@@ -92,7 +92,7 @@
           console.log(data);
         });
 
-      console.table(dogs);
+      console.table(this.dogs);
     }
   };
   Vue.createApp(app).mount('#app')
