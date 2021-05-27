@@ -9,7 +9,7 @@
 
 <body id="app">
   <select v-model="lang" @change="chnageLang($event)">
-    <option v-for="lang in langs" :key="lang" :value="lang">{{lang}}</option>
+    <option v-for="(lang, key) in langs" :key="key" :value="key">{{lang}}</option>
   </select>
   <div class="words" ref="words" contenteditable>
   </div>
@@ -24,7 +24,7 @@
       return {
         recognition: null,
         lang: 'en-US',
-        langs: ['en-US', 'cmn-Hant-TW', 'ja-JP']
+        langs: { 'en-US': '英文', 'cmn-Hant-TW': '中文', 'ja-JP': '日文' }
       }
     },
     methods: {
