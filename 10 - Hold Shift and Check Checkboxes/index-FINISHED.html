@@ -54,7 +54,7 @@
 <body id="app">
   <div class="inbox">
     <div class="item" v-for="(item,index) in items">
-      <input type="checkbox">
+      <input type="checkbox" @change="handleCheck($event)">
       <p>{{item}}</p>
     </div>
   </div>
@@ -80,6 +80,7 @@
     },
     methods: {
       handleCheck(e) {
+        console.log(e)
         // Check if they had the shift key down
         // AND check that they are checking it
         let inBetween = false;

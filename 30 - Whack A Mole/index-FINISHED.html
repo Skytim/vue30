@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Whack A Mole!</title>
+  <title>打地鼠</title>
   <link href='https://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="style.css">
   <script src="https://unpkg.com/vue@next"></script>
@@ -11,8 +11,8 @@
 
 <body id="app">
 
-  <h1>Whack-a-mole! <span class="score">{{score}}</span></h1>
-  <button @click="startGame()">Start!</button>
+  <h1>打-地-鼠! <span class="score">{{score}}</span></h1>
+  <h2><button @click="startGame()">Start!</button></h2>
 
   <div class="game">
     <div class="hole" v-for="(n,i) in holeNumber" :key="i" :ref="'hole' + n">
@@ -32,7 +32,8 @@
         score: 0,
         lastHole: null,
         timeUp: false,
-        holeNumber: 6
+        holeNumber: 6,
+        gameTime:10000
       }
     },
     methods: {
@@ -42,7 +43,7 @@
         self.timeUp = false;
         self.score = 0;
         self.peep();
-        setTimeout(() => self.timeUp = true, 10000)
+        setTimeout(() => self.timeUp = true, self.gameTime)
       },
       peep() {
         const time = this.randomTime(200, 1000);
@@ -62,7 +63,6 @@
         const idx = Math.floor(Math.random() * 6 + 1);
         const hole = self.$refs['hole' + idx];
         if (hole === self.lastHole) {
-          console.log('Ah nah thats the same one bud');
           return self.randomHole();
         }
         self.lastHole = hole;
