@@ -1,68 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <title>Vue Drum Kit</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://unpkg.com/vue@next"></script>
-</head>
-
-<body id="app">
-
-  <div class="keys">
-    <div :ref="'key'+item.key" class="key" v-for="item in ascii">
-      <kbd>{{String.fromCharCode(item.key)}}</kbd>
-      <span class="sound">{{item.sound}}</span>
-      <audio :src="'sounds/'+item.sound+'.wav'" :ref="'audio'+item.key"></audio>
-    </div>
-  </div>
-</body>
-
+    <head>
+        <meta charset="UTF-8" />
+        <title>Vue Drum Kit</title>
+        <link rel="stylesheet" href="style.css" />
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    </head>
+    <body id="app">
+        <div class="keys">
+            <div
+                v-for="key in keys"
+                :key="key.code"
+                :data-key="key.code"
+                :class="['key', { playing: activeKeys.includes(key.label) }]"
+                @transitionend="removeTransition"
+            >
+                <kbd>{{ key.label }}</kbd>
+                <span class="sound">{{ key.sound }}</span>
+            </div>
+        </div>
+    </body>
 </html>
 
-<script type="application/javascript">
-  var app = {
-    data: function () {
-      return {
-        ascii: [
-          { key: 65, sound: 'clap' },
-          { key: 83, sound: 'hihat' },
-          { key: 68, sound: 'kick' },
-          { key: 70, sound: 'openhat' },
-          { key: 71, sound: 'boom' },
-          { key: 72, sound: 'ride' },
-          { key: 74, sound: 'snare' },
-          { key: 75, sound: 'tom' },
-          { key: 76, sound: 'tink' }]
-      }
-    },
-    methods: {
-      playSound(e) {
-        var audio = this.$refs["audio" + e.keyCode];
-        var key = this.$refs["key" + e.keyCode];
-        if (!audio) return;
-        key.classList.add('playing');
-        audio.currentTime = 0;
-        audio.play();
-      },
-      removeTransition(e) {
-        if (e.propertyName !== 'transform') return;
-        e.target.classList.remove('playing');
-      }
-    },
-    mounted() {
-      var self = this;
-      window.addEventListener("keydown", function (e) {
-        self.playSound(e);
-      });
-      for (let [key, value] of Object.entries(this.$refs)) {
-        if (/^key/.test(key)) {
-          value.addEventListener('transitionend', self.removeTransition);
-        }
-      }
-    }
-  }
-  Vue.createApp(app).mount('#app');
+<script>
+    const { createApp, ref, onMounted, onBeforeUnmount } = Vue;
 
+    createApp({
+        setup() {
+            const keys = ref([
+                { label: "A", sound: "clap" },
+                { label: "S", sound: "hihat" },
+                { label: "D", sound: "kick" },
+                { label: "F", sound: "openhat" },
+                { label: "G", sound: "boom" },
+                { label: "H", sound: "ride" },
+                { label: "J", sound: "snare" },
+                { label: "K", sound: "tom" },
+                { label: "L", sound: "tink" },
+            ]);
+
+            const activeKeys = ref([]);
+
+            const playSound = (e) => {
+                const letter = String.fromCharCode(e.keyCode).toUpperCase(); // 转换为大写字母
+                const key = keys.value.find((k) => k.label === letter);
+                if (!key) return;
+
+                const audio = new Audio(`sounds/${key.sound}.wav`);
+                activeKeys.value.push(key.label);
+                audio.currentTime = 0;
+                audio.play();
+                setTimeout(() => {
+                    activeKeys.value = activeKeys.value.filter((l) => l !== key.label);
+                    console.log(activeKeys.value);
+                }, 100);
+            };
+
+            const removeTransition = (e) => {
+                if (e.propertyName !== "transform") return;
+                activeKeys.value = activeKeys.value.filter((label) => label !== e.target.dataset.key);
+            };
+
+            onMounted(() => {
+                window.addEventListener("keydown", playSound);
+            });
+
+            onBeforeUnmount(() => {
+                window.removeEventListener("keydown", playSound);
+            });
+
+            return {
+                keys,
+                activeKeys,
+                playSound,
+                removeTransition,
+            };
+        },
+    }).mount("#app");
 </script>

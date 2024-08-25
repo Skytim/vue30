@@ -2,58 +2,63 @@
 
 ### 摘要
 
-1. 透過輸入鍵盤的案件事件`keydown`觸發功能，利用`refs`定位取得對應的 key object 以及 audio object，並將對應的 key object 加上 class，接著將相對應的 audio 放出音樂`audio.play()`。
+1. playSound 方法負責播放按鍵對應的音效，並且將該按鍵的對應值添加到 activeKeys 陣列中以觸發視覺效果，利用`String.fromCharCode` 將 [ascii 轉成英文字母](https://zh.wikipedia.org/wiki/ASCII)
 
 ```javascript
- window.addEventListener("keydown", function (e) {
-    const audio = this.$refs["audio" + e.keyCode];
-    const key = this.$refs["key" + e.keyCode];
-    if (!audio) return;
-    key.classList.add('playing');
+const playSound = (e) => {
+    const key = keys.value.find((k) => k.code === e.keyCode);
+    if (!key) return;
+
+    const audio = new Audio(`sounds/${key.sound}.wav`);
+    activeKeys.value.push(key.code);
     audio.currentTime = 0;
     audio.play();
-});
+    setTimeout(() => {
+        activeKeys.value = activeKeys.value.filter((code) => code !== key.code);
+    }, 100);
+};
 ```
 
-2. 在 `mounted` 的生命週期註冊上述的事件。
+2. 在 `onMounted` 的生命週期註冊上述的事件。
 3. 利用`vue for`迴圈顯示 object
+
 ```html
-<div :ref="'key'+item.key" class="key" v-for="item in ascii">
-	<kbd>{{String.fromCharCode(item.key)}}</kbd>
-	<span class="sound">{{item.sound}}</span>
-	<audio :src="'sounds/'+item.sound+'.wav'" :ref="'audio'+item.key"></audio>
+<div
+    v-for="key in keys"
+    :key="key.code"
+    :data-key="key.code"
+    :class="['key', { playing: activeKeys.includes(key.label) }]"
+    @transitionend="removeTransition"
+>
+    <kbd>{{ key.label }}</kbd>
+    <span class="sound">{{ key.sound }}</span>
 </div>
 ```
-4. 利用`String.fromCharCode` 將 [ascii 轉成英文字母](https://zh.wikipedia.org/wiki/ASCII)
 
-```html
-<span>{{String.fromCharCode('65')}}</span> /// A
-```
+
 Display:
 
 ### CSS 概念
 
 1. flex 基本用法:
-   - align-items : center; //垂直置中
-   - justify-content:center; //水平置中
+    - align-items : center; //垂直置中
+    - justify-content:center; //水平置中
 2. transition 動畫效果用法: property duration timing-function delay;ex:transition:all 0.07s ease
-   - property:有 width, color...
-   - timing function:
-     - ease cubic-bezier(0.25, 0.1, 0.25, 1.0)
-     - liner cubic-bezier(0.0, 0.0, 1.0, 1.0)
-     - ease-in cubic-bezier(0.42, 0.0, 1.0, 1.0)
-     - ease-out cubic-bezier(0.0, 0.0, 0.58, 1.0)
-     - ease-in-out cubic-bezier(0.42, 0.0, 0.58, 1.0)
+    - property:有 width, color...
+    - timing function:
+        - ease cubic-bezier(0.25, 0.1, 0.25, 1.0)
+        - liner cubic-bezier(0.0, 0.0, 1.0, 1.0)
+        - ease-in cubic-bezier(0.42, 0.0, 1.0, 1.0)
+        - ease-out cubic-bezier(0.0, 0.0, 0.58, 1.0)
+        - ease-in-out cubic-bezier(0.42, 0.0, 0.58, 1.0)
 3. 可以直接註冊標籤，並在 css 內敘述標籤功能。
 4. 背景圖片
 
 ```html
-html{
-	background:url(http://...)
-    background-size:cover
-}
+html{ background:url(http://...) background-size:cover }
 ```
 
 ### 參考
 
-1. [Vue $refs](https://blog.johnsonlu.org/vue-refs/)
+1. [v-for](https://cn.vuejs.org/api/built-in-directives.html#v-for)
+2. [onMounted()](https://cn.vuejs.org/api/composition-api-lifecycle#onmounted)
