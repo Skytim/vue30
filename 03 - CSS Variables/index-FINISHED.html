@@ -1,79 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Scoped CSS Variables and Vue</title>
+        <style>
+            :root {
+                --base: #ffc600;
+                --spacing: 10px;
+                --blur: 10px;
+            }
 
-<head>
-  <meta charset="UTF-8">
-  <title>Scoped CSS Variables and Vue</title>
-  <style>
-    :root {
-      --base: #ffc600;
-      --spacing: 10px;
-      --blur: 10px;
-    }
+            img {
+                padding: var(--spacing);
+                background: var(--base);
+                filter: blur(var(--blur));
+            }
 
-    img {
-      padding: var(--spacing);
-      background: var(--base);
-      filter: blur(var(--blur));
-    }
+            .hl {
+                color: var(--base);
+            }
 
-    .hl {
-      color: var(--base);
-    }
+            body {
+                text-align: center;
+                background: #193549;
+                color: white;
+                font-family: "helvetica neue", sans-serif;
+                font-weight: 100;
+                font-size: 50px;
+            }
 
-    /*
-      misc styles, nothing to do with CSS variables
-    */
+            .controls {
+                margin-bottom: 50px;
+            }
 
-    body {
-      text-align: center;
-      background: #193549;
-      color: white;
-      font-family: 'helvetica neue', sans-serif;
-      font-weight: 100;
-      font-size: 50px;
-    }
+            input {
+                width: 100px;
+            }
+        </style>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    </head>
 
-    .controls {
-      margin-bottom: 50px;
-    }
+    <body id="app">
+        <h2>Update CSS Variables with <span class="hl">Vue</span></h2>
 
-    input {
-      width: 100px;
-    }
-  </style>
-  <script src="https://unpkg.com/vue@next"></script>
-</head>
+        <div class="controls">
+            <label for="spacing">Spacing:</label>
+            <input
+                id="spacing"
+                type="range"
+                name="spacing"
+                min="10"
+                max="200"
+                value="10"
+                data-sizing="px"
+                v-model="spacing"
+            />
 
-<body id="app">
-  <h2>Update CSS Variables with <span class='hl'>Vue</span></h2>
+            <label for="blur">Blur:</label>
+            <input
+                id="blur"
+                type="range"
+                name="blur"
+                min="0"
+                max="25"
+                value="10"
+                data-sizing="px"
+                v-model="blur"
+            />
 
-  <div class="controls">
-    <label for="spacing">Spacing:</label>
-    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px"
-      @mousemove="handleUpdate" @change="handleUpdate">
+            <label for="base">Base Color</label>
+            <input
+                id="base"
+                type="color"
+                name="base"
+                value="#ffc600"
+                v-model="base"
+            />
+        </div>
 
-    <label for="blur">Blur:</label>
-    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px" @mousemove="handleUpdate"
-      @change="handleUpdate">
-
-    <label for="base">Base Color</label>
-    <input id="base" type="color" name="base" value="#ffc600" @mousemove="handleUpdate" @change="handleUpdate">
-  </div>
-
-  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
-</body>
-
+        <img
+            src="https://images.unsplash.com/photo-1531040630173-7cfb894c8eaa?q=80&w=2804&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            style="width: 800px; width: 500px"
+        />
+    </body>
 </html>
 <script>
-  const app = {
-    methods: {
-      handleUpdate(e) {
-        const target = e.target;
-        const suffix = target.dataset.sizing || '';
-        document.documentElement.style.setProperty(`--${target.name}`, target.value + suffix);
-      }
-    }
-  };
-  Vue.createApp(app).mount('#app')
+    const { ref, watchEffect, createApp } = Vue;
+
+    const app = {
+        setup() {
+            const spacing = ref(10);
+            const blur = ref(10);
+            const base = ref("#ffc600");
+
+            watchEffect(() => {
+                document.documentElement.style.setProperty("--spacing", `${spacing.value}px`);
+                document.documentElement.style.setProperty("--blur", `${blur.value}px`);
+                document.documentElement.style.setProperty("--base", base.value);
+            });
+
+            return {
+                spacing,
+                blur,
+                base,
+            };
+        },
+    };
+
+    createApp(app).mount("#app");
 </script>

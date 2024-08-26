@@ -3,49 +3,14 @@
 ## 摘要
 本篇最主要透過 CSS 以及 Vue 抓取物件去改變 CSS的值，範例是改變了內邊距(padding), 模糊度(blur)及顏色，並同時對標題得字進行改變。
 
-大致上的想法如下:
+大致說明如下:
 
-1. 在css中定義變數，並把變數關連到頁面。
-2. 利用 Vue 抓取改變的量(使用@change監聽顏色改變及@mouseover事件監聽range)，並更新CSS的變數值。
-3. `type="range"`會呈現可左右移動的滑動桿。
-```html
-<input type="range" min="0" max="100" step="1" value="10">
-```
-4. `:root` 是DOM元件的根元素，相當於`<html>`，一般會把CSS的變數聲明在內，CSS3原生的變數表示法: `--variable`;
-
-```css
-\\宣告方式
-:root{
-	--base: #ffc600;
-    --blur: 10px;
-    --spacing: 10px;
-}
-\\使用方式
-span.hl{
-	color: var(--base);
-}
-img{
-	padding: var(--spacing);
-    filter: blur(var(--blur));
-    background: var(--base);
-}
-```
-
-5. filter:blur()濾鏡使用，常見的還有blur(模糊度)opacity(透明度)。
-
-```html
-<div class="controls">
-	<input >
-    <input >
-    <input >
-```
-
-6. `target.dataset`:會出現 evevnt handle 目標 target 中所有`data-`的項目及值。舉例來說，如果要選取`data-sizing`的值，可以使用`target.dataset.sizing`，在範例中，`data-sizing`存放的是`px`，所以在取到目標的值之後，還需要加上`px`值才可以運作，不過顏色沒有單位，所以也可以為空，避免報錯。
-
-```javascript
- handleUpdate(e) {
-    const target = e.target;
-    const suffix = target.dataset.sizing || '';
-    document.documentElement.style.setProperty(`--${target.name}`, target.value + suffix);
-}
-```
+1. Vue.js 設置：
+    使用Composition API定義了Vue應用。
+    ref用於創建響應式的資料屬性spacing, blur, 和 base，這些屬性分別控制間距、模糊效果和基礎顏色。
+2. 響應式變化：
+    watchEffect用於監控這些屬性的變化，當它們變化時，使用document.documentElement.style.setProperty來更新CSS變數的值。
+    這些CSS變數被動態綁定到input元素的v-model指令中，當使用者調整這些控制項時，CSS樣式會自動更新。
+3. 最終效果：
+    使用者可以通過滑動條調整圖片的間距（Spacing）和模糊效果（Blur），並且可以使用顏色選擇器更改圖片的背景顏色（Base Color）。
+	所有這些變化都會立即反映在圖片的樣式上，實現了即時的樣式更新效果。
