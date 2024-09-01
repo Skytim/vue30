@@ -2,7 +2,7 @@
 
 # Vue 30
 
-本篇幅是 以 Javascript30 線上的教學課程為基礎修改而成的 Vue 教程，在三十天的時間每天實作一個簡單的Vue作品並講解相關概念。 
+本篇幅是 以 Javascript30 線上的教學課程為基礎修改而成的 Vue 3教程，皆基於 Composition API，在三十天的時間每天實作一個簡單的Vue作品並講解相關概念。 
 原教學網站：[https://JavaScript30.com](https://JavaScript30.com)。
 原Github位址：[wesbos/Javascript30](https://github.com/wesbos/JavaScript30)
 
@@ -15,10 +15,10 @@
 | 1. Vue Drum kit                              | 實作按下鍵盤發出的效果                              | [效果](https://skytim.github.io/vue30/01%20-%20Vue%20Drum%20Kit/index-FINISHED.html) | [詳解](https://github.com/Skytim/vue30/tree/master/01%20-%20Vue%20Drum%20Kit) |
 | 2. Vue and CSS Clock                      | 以Vue及CSS實作時鐘                              | [效果](https://skytim.github.io/vue30/02%20-%20Vue%20and%20CSS%20Clock/index-FINISHED.html)  | [詳解](https://github.com/Skytim/vue30/tree/master/02%20-%20Vue%20and%20CSS%20Clock) |
 | 3. Update CSS variable with Vue           | 利用 CSS變數去改變CSS及JS的值造成效果                  | [效果](https://skytim.github.io/vue30/03%20-%20CSS%20Variables/index-FINISHED.html)         | [詳解](https://github.com/skytim/vue30/tree/master/03%20-%20CSS%20Variables) |
-| 4.  Array Cardio Day 1                   | 介紹 Lodash array的使用(filter, map, sort, reduce) | 無，用console操作                             | [詳解](https://github.com/skytim/vue30/tree/master/04%20-%20Array%20Cardio%20Day%201) |
-| 5.  Flex Panel Gallery (未完成)                  | 利用 `flex` 的特性及 `transition` 的動畫效果做出點擊後的效果呈現。 | [效果](https://skytim.github.io/vue30/05%20-%20Flex%20Panel%20Gallery/index-FINISHED.html)  | [詳解](https://skytim.github.io/vue30/05%20-%20Flex%20Panel%20Gallery/) |
+| 4.  Array Cardio Day 1                   | 介紹 VueUse 來操作 ref array(filter, map, sort, reduce) | 無，用console操作                             | [詳解](https://github.com/skytim/vue30/tree/master/04%20-%20Array%20Cardio%20Day%201) |
+| 5.  Flex Panel Gallery                 | 利用 `flex` 的特性及 `transition` 的動畫效果做出點擊後的效果呈現。 | [效果](https://skytim.github.io/vue30/05%20-%20Flex%20Panel%20Gallery/index-FINISHED.html)  | [詳解](https://skytim.github.io/vue30/05%20-%20Flex%20Panel%20Gallery/) |
 | 6. Type Ahead                            | 介紹 `Axios`用 ajax的方式來取資料(城市名稱)，並依使用者輸入字符的不同查找不同的資料，會使用到正規表達式來處理字串。 | [效果](https://skytim.github.io/vue30/06%20-%20Type%20Ahead/index-FINISHED.html)            | [詳解](https://github.com/skytim/vue30/tree/master/06%20-%20Type%20Ahead) |
-| 7. Array Cardio Day 2                    | 介紹 Lodash array的使用(`some()`，`every()`，`find()`，`findIndex()`，利用也提到了關於`splice()`, `slice()`, `...`)的應用。 | 無，用console操作                             | [詳解](https://github.com/skytim/vue30/tree/master/07%20-%20Array%20Cardio%20Day%202) |
+| 7. Array Cardio Day 2                    | 介紹 VueUse 來操作 ref array 來操作(`some()`，`every()`，`find()`，`findIndex()`，利用也提到了關於`splice()`, `slice()`, `...`)的應用。 | 無，用console操作                             | [詳解](https://github.com/skytim/vue30/tree/master/07%20-%20Array%20Cardio%20Day%202) |
 | 8.  Fun with HTML5 Canvas                | 本篇主要透過Html的`canvas` 標籤搭配Javascript做出畫布的效果。效果包括:顏色的變化(`hsl`)及軌跡的粗細縮放。 | [效果](https://skytim.github.io/vue30/08%20-%20Fun%20with%20HTML5%20Canvas/index-FINISHED.html) | [詳解](https://github.com/skytim/vue30/tree/master/08%20-%20Fun%20with%20HTML5%20Canvas) |
 | 9.  Dev Tools Domination                 | 介紹常用的`dev tool` 以及`vue tool` ，增加開發`javascript`的除錯速度。 | 無，用console操作                             | [詳解](https://github.com/skytim/vue30/tree/master/09%20-%20Dev%20Tools%20Domination) |
 | 10.  Hold Shift and Check Checkboxes     | 本篇主要是要實作透過點擊checkbox後按下shift鍵之後一次選取多個checkbox的功能。 | [效果](https://skytim.github.io/vue30/10%20-%20Hold%20Shift%20and%20Check%20Checkboxes/index-FINISHED.html) | [詳解](https://github.com/skytim/vue30/tree/master/10%20-%20Hold%20Shift%20and%20Check%20Checkboxes) |

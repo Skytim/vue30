@@ -4,61 +4,68 @@
     <meta charset="UTF-8" />
     <title>Type Ahead 👀</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
-  <body id="app">
-    <form class="search-form">
-      <input
-        type="text"
-        class="search"
-        placeholder="City or State"
-        @change="displayMatches"
-        @keyup="displayMatches"
-      />
-      <ul class="suggestions">
-        <li v-for="data in displayCities">
-          <span class="name">{{data?.city}} {{data?.state}}</span>
-          <span class="population">{{ numberWithCommas(data?.population)}}</span>
-        </li>
-      </ul>
-    </form>
+  <body>
+    <div id="app">
+      <form class="search-form">
+        <input
+          type="text"
+          class="search"
+          placeholder="City or State"
+          @input="displayMatches"
+        />
+        <ul class="suggestions">
+          <li v-for="data in displayCities" :key="data.city + data.state">
+            <span class="name">{{ data?.city }} {{ data?.state }}</span>
+            <span class="population">{{ numberWithCommas(data?.population) }}</span>
+          </li>
+        </ul>
+      </form>
+    </div>
   </body>
 </html>
 <script>
+  const { ref, onMounted } = Vue;
+
   const app = {
-    data() {
-      return {
-        endpoint:
-          "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json",
-        initCities: [],
-        displayCities: [],
-      };
-    },
-    methods: {
-      findMatches(wordToMatch, cities) {
-        if(wordToMatch===""){
+    setup() {
+      const endpoint = ref(
+        "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json"
+      );
+      const initCities = ref([]);
+      const displayCities = ref([]);
+
+      const findMatches = (wordToMatch, cities) => {
+        if (wordToMatch === "") {
           return [];
         }
-        return cities.filter((place) => {
-          // here we need to figure out if the city or state matches what was searched
-          const regex = new RegExp(wordToMatch, "gi");
-          return place.city.match(regex) || place.state.match(regex);
-        });
-      },
-      displayMatches(e) {
-        this.displayCities = this.findMatches(e.target.value, this.initCities);
-      },
-      numberWithCommas(x) {
+        const regex = new RegExp(wordToMatch, "gi");
+        return cities.filter((place) => place.city.match(regex) || place.state.match(regex));
+      };
+
+      const displayMatches = (e) => {
+        displayCities.value = findMatches(e.target.value, initCities.value);
+      };
+
+      const numberWithCommas = (x) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      }
-    },
-    mounted() {
-      var self = this;
-      axios.get(self.endpoint).then(function (response) {
-        self.initCities = response.data;
+      };
+
+      onMounted(() => {
+        axios.get(endpoint.value).then((response) => {
+          initCities.value = response.data;
+        });
       });
-    }
+
+      return {
+        displayCities,
+        displayMatches,
+        numberWithCommas,
+      };
+    },
   };
+
   Vue.createApp(app).mount("#app");
 </script>
