@@ -3,33 +3,43 @@
     <head>
         <meta charset="UTF-8" />
         <title>Key Detection</title>
-        <script src="https://unpkg.com/vue@next"></script>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
         <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
     </head>
     <body id="app"></body>
 </html>
 <script>
+    const { ref, onMounted } = Vue;
+
     const app = {
-        data: function () {
+        setup() {
+            // 使用 ref 創建響應式變量
+            const pressed = ref([]);
+            const secretCode = ref("tim");
+
+            // 在組件掛載後，添加事件監聽器
+            onMounted(() => {
+                window.addEventListener("keyup", (e) => {
+                    console.log(e.key);
+                    pressed.value.push(e.key);
+                    // 保持 pressed 陣列長度與 secretCode 相同
+                    pressed.value.splice(-secretCode.value.length - 1, pressed.value.length - secretCode.value.length);
+                    // 檢查是否輸入的密碼匹配 secretCode
+                    if (pressed.value.join("").includes(secretCode.value)) {
+                        console.log("DING DING!");
+                        cornify_add();
+                    }
+                    console.log(pressed.value);
+                });
+            });
+
+            // 將需要的響應式資料返回給模板
             return {
-                pressed: [],
-                secretCode: "tim",
+                pressed,
+                secretCode,
             };
         },
-        methods: {},
-        mounted() {
-            var self = this;
-            window.addEventListener("keyup", (e) => {
-                console.log(e.key);
-                self.pressed.push(e.key);
-                self.pressed.splice(-self.secretCode.length - 1, self.pressed.length - self.secretCode.length);
-                if (self.pressed.join("").includes(self.secretCode)) {
-                    console.log("DING DING!");
-                    cornify_add();
-                }
-                console.log(self.pressed);
-            });
-        },
     };
+
     Vue.createApp(app).mount("#app");
 </script>
