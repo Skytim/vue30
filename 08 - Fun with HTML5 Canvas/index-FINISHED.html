@@ -12,70 +12,81 @@
             width="800"
             height="800"
             ref="draw"
-            @mousedown="mousedownAction($event)"
-            @mousemove="draw($event)"
-            @mouseup="isDrawing=false"
-            @mouseout="isDrawing=false"
+            @mousedown="mousedownAction"
+            @mousemove="draw"
+            @mouseup="isDrawing = false"
+            @mouseout="isDrawing = false"
         ></canvas>
     </body>
 </html>
 <script>
-    var app = {
-        data: function () {
-            return {
-                canvas: null,
-                ctx: null,
+    const { ref, reactive, onMounted } = Vue;
+
+    const app = {
+        setup() {
+            const canvas = ref(null);
+            const ctx = ref(null);
+            const state = reactive({
                 isDrawing: false,
                 lastX: 0,
                 lastY: 0,
                 hue: 0,
                 direction: true,
+            });
+
+            const mousedownAction = (e) => {
+                state.isDrawing = true;
+                state.lastX = e.offsetX;
+                state.lastY = e.offsetY;
+            };
+
+            const draw = (e) => {
+                if (!state.isDrawing) return;
+                ctx.value.strokeStyle = `hsl(${state.hue}, 100%, 50%)`;
+                ctx.value.beginPath();
+                ctx.value.moveTo(state.lastX, state.lastY);
+                ctx.value.lineTo(e.offsetX, e.offsetY);
+                ctx.value.stroke();
+                state.lastX = e.offsetX;
+                state.lastY = e.offsetY;
+
+                state.hue++;
+                if (state.hue >= 360) {
+                    state.hue = 0;
+                }
+                if (ctx.value.lineWidth >= 100 || ctx.value.lineWidth <= 1) {
+                    state.direction = !state.direction;
+                }
+
+                if (state.direction) {
+                    ctx.value.lineWidth++;
+                } else {
+                    ctx.value.lineWidth--;
+                }
+            };
+
+            onMounted(() => {
+                canvas.value = document.getElementById("draw");
+                ctx.value = canvas.value.getContext("2d");
+                canvas.value.width = window.innerWidth;
+                canvas.value.height = window.innerHeight;
+                ctx.value.strokeStyle = "#BADA55";
+                ctx.value.lineJoin = "round";
+                ctx.value.lineCap = "round";
+                ctx.value.lineWidth = 100;
+                ctx.value.globalCompositeOperation = "multiply";
+            });
+
+            return {
+                canvas,
+                ctx,
+                state,
+                mousedownAction,
+                draw,
             };
         },
-        methods: {
-            mousedownAction(e) {
-                this.isDrawing = true;
-                this.lastX = e.offsetX;
-                this.lastY = e.offsetY;
-            },
-            draw(e) {
-                if (!this.isDrawing) return; // stop the fn from running when they are not moused down
-                this.ctx.strokeStyle = `hsl(${this.hue}, 100%, 50%)`;
-                this.ctx.beginPath();
-                // start from
-                this.ctx.moveTo(this.lastX, this.lastY);
-                // go to
-                this.ctx.lineTo(e.offsetX, e.offsetY);
-                this.ctx.stroke();
-                [this.lastX, this.lastY] = [e.offsetX, e.offsetY];
-
-                this.hue++;
-                if (this.hue >= 360) {
-                    this.hue = 0;
-                }
-                if (this.ctx.lineWidth >= 100 || this.ctx.lineWidth <= 1) {
-                    this.direction = !this.direction;
-                }
-
-                if (this.direction) {
-                    this.ctx.lineWidth++;
-                } else {
-                    this.ctx.lineWidth--;
-                }
-            },
-        },
-        mounted() {
-            this.canvas = this.$refs["draw"];
-            this.ctx = this.canvas.getContext("2d");
-            this.canvas.width = window.innerWidth;
-            this.canvas.height = window.innerHeight;
-            this.ctx.strokeStyle = "#BADA55";
-            this.ctx.lineJoin = "round";
-            this.ctx.lineCap = "round";
-            this.ctx.lineWidth = 100;
-            this.ctx.globalCompositeOperation = "multiply";
-        },
     };
+
     Vue.createApp(app).mount("#app");
 </script>
 <style>
