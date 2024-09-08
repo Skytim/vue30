@@ -1,99 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Console Tricks!</title>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    </head>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Console Tricks!</title>
-  <script src="https://unpkg.com/vue@next"></script>
-</head>
-
-<body id="app">
-  <p @click="makeGreen()">×BREAK×DOWN×</p>
-</body>
-
+    <body id="app">
+        <p ref="textElement" @click="makeGreen">×BREAK×DOWN×</p>
+    </body>
 </html>
+
 <script>
-  var app = {
-    data: function () {
-      return {
-        dogs: [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }],
-      }
-    },
-    methods: {
-      makeGreen() {
-        const p = document.querySelector('p');
-        p.style.color = '#BADA55';
-        p.style.fontSize = '50px';
-      }
-    },
-    mounted() {
-      // Regular
-      console.log('hello');
+    const { ref, onMounted } = Vue;
 
-      // Interpolated
-      console.log('Hello I am a %s string!', '💩');
+    const app = {
+        setup() {
+            const dogs = ref([
+                { name: "Snickers", age: 2 },
+                { name: "hugo", age: 8 },
+            ]);
 
-      // Styled
-      // console.log('%c I am some great text', 'font-size:50px; background:red; text-shadow: 10px 10px 0 blue')
+            // Vue 中透過 ref 存取 DOM 元素
+            const textElement = ref(null);
 
-      // warning!
-      console.warn('OH NOOO');
+            // 使用 Vue 的 ref 操作 DOM，而非直接用 document.querySelector
+            const makeGreen = () => {
+                textElement.value.style.color = "#BADA55";
+                textElement.value.style.fontSize = "50px";
+            };
 
-      // Error :|
-      console.error('Shit!');
+            onMounted(() => {
+                console.log("hello");
+                console.warn("OH NOOO");
+                console.table(dogs.value);
+            });
 
-      // Info
-      console.info('Crocodiles eat 3-4 people per year');
+            return {
+                dogs,
+                textElement,
+                makeGreen,
+            };
+        },
+    };
 
-      // Testing
-      const p = document.querySelector('p');
-
-      console.assert(p.classList.contains('ouch'), 'That is wrong!');
-
-      // clearing
-      console.clear();
-
-      // Viewing DOM Elements
-      console.log(p);
-      console.dir(p);
-
-      console.clear();
-
-      // Grouping together
-      this.dogs.forEach(dog => {
-        console.groupCollapsed(`${dog.name}`);
-        console.log(`This is ${dog.name}`);
-        console.log(`${dog.name} is ${dog.age} years old`);
-        console.log(`${dog.name} is ${dog.age * 7} dog years old`);
-        console.groupEnd(`${dog.name}`);
-      });
-
-      // counting
-
-      console.count('Tim');
-      console.count('Tim');
-      console.count('Tsai');
-      console.count('Tsai');
-      console.count('Tim');
-      console.count('Tsai');
-      console.count('Tim');
-      console.count('Tsai');
-      console.count('Tsai');
-      console.count('Tsai');
-      console.count('Tsai');
-      console.count('Tsai');
-
-      // timing
-      console.time('fetching data');
-      fetch('https://api.github.com/users/skytim')
-        .then(data => data.json())
-        .then(data => {
-          console.timeEnd('fetching data');
-          console.log(data);
-        });
-
-      console.table(this.dogs);
-    }
-  };
-  Vue.createApp(app).mount('#app')
+    Vue.createApp(app).mount("#app");
 </script>
